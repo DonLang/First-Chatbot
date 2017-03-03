@@ -59,8 +59,7 @@ app.post('/webhook/', function (req, res) {
     }
     res.sendStatus(200);
 });
-
-var token = process.env.FB_PAGE_TOKEN;
+token = process.env.FB_PAGE_TOKEN;
 
 function sendTextMessage(sender, text) {
     "use strict";
