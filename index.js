@@ -25,7 +25,6 @@ app.get('/', function (req, res) {
 // for Facebook verification
 app.get('/webhook/', function (req, res) {
     "use strict";
-    var token = process.env.FB_PAGE_TOKEN;
     if (req.query['hub.verify_token'] === process.env.FB_VERIFY_TOKEN) {
         res.send(req.query['hub.challenge']);
     }
@@ -53,7 +52,6 @@ app.post('/webhook/', function (req, res) {
             sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200));
         }
         if (event.postback) {
-            var token = process.env.FB_PAGE_TOKEN;
             text = JSON.stringify(event.postback);
             sendTextMessage(sender, "Postback received: " + text.substring(0, 200), token);
             continue;
@@ -62,11 +60,10 @@ app.post('/webhook/', function (req, res) {
     res.sendStatus(200);
 });
 
-
+var token = process.env.FB_PAGE_TOKEN;
 
 function sendTextMessage(sender, text) {
     "use strict";
-    var token = process.env.FB_PAGE_TOKEN;
     var messageData = {
         text: text
     };
@@ -93,7 +90,6 @@ function sendTextMessage(sender, text) {
 
 function sendGenericMessage(sender) {
     "use strict";
-    var token = process.env.FB_PAGE_TOKEN;
     var messageData = {
         attachment: {
             type: "template",
@@ -145,4 +141,4 @@ function sendGenericMessage(sender) {
             console.log('Error: ', response.body.error);
         }
     });
-}
+};
