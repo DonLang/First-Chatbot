@@ -39,8 +39,8 @@ app.listen(app.get('port'), function () {
 });
 app.post('/webhook/', function (req, res) {
     "use strict";
-    messaging_events = req.body.entry[0].messaging;
-    for (i = 0; i < messaging_events.length; i += 1) {
+    var messaging_events = req.body.entry[0].messaging;
+    for (var i = 0; i < messaging_events.length; i += 1) {
         event = req.body.entry[0].messaging[i];
         sender = event.sender.id;
         if (event.message && event.message.text) {
@@ -52,7 +52,7 @@ app.post('/webhook/', function (req, res) {
             sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200));
         }
         if (event.postback) {
-            text = JSON.stringify(event.postback);
+            var text = JSON.stringify(event.postback);
             sendTextMessage(sender, "Postback received: " + text.substring(0, 200), token);
             continue;
         }
