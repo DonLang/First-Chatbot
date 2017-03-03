@@ -41,10 +41,10 @@ app.post('/webhook/', function (req, res) {
     "use strict";
     var messaging_events = req.body.entry[0].messaging;
     for (var i = 0; i < messaging_events.length; i += 1) {
-        event = req.body.entry[0].messaging[i];
-        sender = event.sender.id;
+        var event = req.body.entry[0].messaging[i];
+        var sender = event.sender.id;
         if (event.message && event.message.text) {
-            text = event.message.text;
+            var text = event.message.text;
             if (text === 'Generic') {
                 sendGenericMessage(sender);
                 continue;
