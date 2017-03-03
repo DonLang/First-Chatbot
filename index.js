@@ -25,37 +25,14 @@ app.get('/', function (req, res) {
 // for Facebook verification
 app.get('/webhook/', function (req, res) {
     "use strict";
+    var token = process.env.FB_PAGE_TOKEN;
     if (req.query['hub.verify_token'] === process.env.FB_VERIFY_TOKEN) {
         res.send(req.query['hub.challenge']);
     }
     res.send('Error, wrong token');
 });
 
-// function sendTextMessage(sender, text) {
-//     "use strict";
-//     messageData = {
-//         text: text
-//     };
-//     request({
-//         url: 'https://graph.facebook.com/v2.6/me/messages',
-//         qs: {
-//             access_token: token
-//         },
-//         method: 'POST',
-//         json: {
-//             recipient: {
-//                 id: sender
-//             },
-//             message: messageData
-//         }
-//     }, function (error, response, body) {
-//         if (error) {
-//             console.log('Error sending messages: ', error);
-//         } else if (response.body.error) {
-//             console.log('Error: ', response.body.error);
-//         }
-//     });
-// }
+
 // Spin up the server
 app.listen(app.get('port'), function () {
     "use strict";
@@ -76,6 +53,7 @@ app.post('/webhook/', function (req, res) {
             sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200));
         }
         if (event.postback) {
+            var token = process.env.FB_PAGE_TOKEN;
             text = JSON.stringify(event.postback);
             sendTextMessage(sender, "Postback received: " + text.substring(0, 200), token);
             continue;
@@ -84,10 +62,11 @@ app.post('/webhook/', function (req, res) {
     res.sendStatus(200);
 });
 
-var token = process.env.FB_PAGE_TOKEN;
+
 
 function sendTextMessage(sender, text) {
     "use strict";
+    var token = process.env.FB_PAGE_TOKEN;
     var messageData = {
         text: text
     };
@@ -113,8 +92,8 @@ function sendTextMessage(sender, text) {
 }
 
 function sendGenericMessage(sender) {
-<<<<<<< HEAD
     "use strict";
+    var token = process.env.FB_PAGE_TOKEN;
     var messageData = {
         attachment: {
             type: "template",
@@ -134,7 +113,6 @@ function sendGenericMessage(sender) {
                         payload: "Payload for first element in a generic bubble"
                     }]
                 }, {
-
                     title: "Second card",
                     subtitle: "Element #2 of an hscroll",
                     image_url: "https://octodex.github.com/images/privateinvestocat.jpg",
